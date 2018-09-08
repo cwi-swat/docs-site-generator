@@ -46,7 +46,7 @@ node {
             }
             
             stage('Deploy') {
-                sh 'mvn deploy:deploy-file -DgeneratePom=false -Dpackaging=tar.gz -Dfile=full-site.tar.gz -DrepositoryId=usethesource-snapshots -Durl=$NEXUS_ROOT/content/repositories/snapshots/'
+                sh 'mvn deploy:deploy-file -DgroupId=org.rascalmpl -DartifactId=docs-tutor-site -Dversion=1.0.0-SNAPSHOT -DgeneratePom=false -Dpackaging=tar.gz -Dfile=full-site.tar.gz -DrepositoryId=usethesource-snapshots -Durl=$NEXUS_ROOT/content/repositories/snapshots/'
             }
         }
     } catch(e) {
