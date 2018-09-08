@@ -6,13 +6,9 @@ node {
 
         env.NEXUS_ROOT="http://nexus.usethesource.io"
 
-        stage('Clone'){
+        stage('Clone & Reset'){
             checkout scm
-        }
-
-        stage("Reset") {
-            sh "rm -rf site"
-            sh "mkdir site"
+            sh "rm -rf site && mkdir site"
         }
 
         stage("Download & Unpack") {
@@ -20,7 +16,7 @@ node {
             // downside is that this Jenkinsfile has to be re-run after a new stable release, as it takes a minute for the update site to process it
             sh 'curl -L "https://update.rascal-mpl.org/console/rascal-shell-stable.jar" > unstable.jar'
             // for the unstable, we do use nexus, to avoid always being one commit behind the unstable release on the slower-to-update update site
-            sh 'curl -L "http://nexus.usethesource.io/service/local/artifact/maven/content?g=org.rascalmpl&a=rascal&r=snapshots&v=LATEST" > stable.jar'
+            sh 'curl -L "$NEXUS_ROOT/service/local/artifact/maven/content?g=org.rascalmpl&a=rascal&r=snapshots&v=LATEST" > stable.jar'
 
             sh 'jar xf stable.jar boot/courses   && mv boot/courses site/stable '
             sh 'jar xf unstable.jar boot/courses && mv boot/courses site/unstable '
@@ -50,7 +46,7 @@ node {
             }
             
             stage('Deploy') {
-                sh 'mvn deploy:deploy-file -DgeneratePom=false -Dpackaging=tar.gz -Dfile=full-site.tar.gz'
+                sh 'mvn deploy:deploy-file -DgeneratePom=false -Dpackaging=tar.gz -Dfile=full-site.tar.gz -DrepositoryId=usethesource-snapshots -Durl=$NEXUS_ROOT/content/repositories/snapshots/'
             }
         }
     } catch(e) {
