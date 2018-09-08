@@ -22,11 +22,8 @@ node {
             // for the unstable, we do use nexus, to avoid always being one commit behind the unstable release on the slower-to-update update site
             sh 'curl -L "http://nexus.usethesource.io/service/local/artifact/maven/content?g=org.rascalmpl&a=rascal&r=snapshots&v=LATEST" > stable.jar'
 
-            sh 'jar xf stable.jar boot/courses'
-            sh 'mv boot/courses site/stable'
-
-            sh 'jar xf unstable.jar boot/courses'
-            sh 'mv boot/courses site/unstable'
+            sh 'jar xf stable.jar boot/courses   && mv boot/courses site/stable '
+            sh 'jar xf unstable.jar boot/courses && mv boot/courses site/unstable '
 
             sh 'rm -r *.jar boot/'
         }
