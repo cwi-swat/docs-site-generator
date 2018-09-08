@@ -43,8 +43,8 @@ node {
         withMaven(maven: 'M3', jdk: 'jdk-oracle-8', options: [artifactsPublisher(disabled: true), junitPublisher(disabled: true)] ) {
             stage("Merge indexes") {
                 sh 'mkdir site/search'
-                sh 'mvn exec:java -Dexec.args=site/search/stable site/stable/'
-                sh 'mvn exec:java -Dexec.args=site/search/unstable site/unstable/'
+                sh 'mvn exec:java -Dexec.args="site/search/stable site/stable/"'
+                sh 'mvn exec:java -Dexec.args="site/search/unstable site/unstable/"'
             }
 
             stage('Package') {
