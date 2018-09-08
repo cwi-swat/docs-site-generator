@@ -6,6 +6,10 @@ node {
 
         env.NEXUS_ROOT="http://nexus.usethesource.io"
 
+        stage('Clone'){
+            checkout scm
+        }
+
         stage("Reset") {
             sh "rm -rf site"
             sh "mkdir site"
