@@ -25,8 +25,8 @@ node {
         }
 
         stage("Fixup") {
-            sh "find site/www/stable -name *.html -print0   | xargs -0 sed -i 's,\\(src\\|href|action\\)=\"/,\\1=\"/stable/,g'"
-            sh "find site/www/unstable -name *.html -print0 | xargs -0 sed -i 's,\\(src\\|href|action\\)=\"/,\\1=\"/unstable/,g'"
+            sh "find site/www/stable -name *.html -print0   | xargs -0 sed -i 's,\\(src\\|href\\|action\\)=\"/,\\1=\"/stable/,g'"
+            sh "find site/www/unstable -name *.html -print0 | xargs -0 sed -i 's,\\(src\\|href\\|action\\)=\"/,\\1=\"/unstable/,g'"
         }
 
         stage("Compress") {

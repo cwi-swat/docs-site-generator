@@ -13,7 +13,8 @@ readonly NEXUS_ROOT="http://nexus.usethesource.io/content/repositories/snapshots
 curl -s -f -L "$NEXUS_ROOT/maven-metadata.xml" > /tmp/docs-manifest.xml
 
 readonly last_script_version=$( sed -n 's/^[ \t]*<value>\([^<]*\)<.*$/\1/p' /tmp/docs-manifest.xml | head -n 1 )
-readonly current_version=$(cat "$1/version" )
+readonly current_version=$(cat "$TARGET_DIR/version" )
+readonly two_versions_ago=$(cat "$TARGET_DIR/old_version")
 
 if [ "$last_script_version" == "$current_version" ]; then
     exit 0
@@ -31,16 +32,14 @@ else
         exit 1
     fi
 
-    echo `ls``
     mv "site/" "$TARGET_DIR/site-$last_script_version"
-    if ! ln -fns "$TARGET_DIR/site-$last_script_version/www" "$TARGET_DIR/www"; then
+    if ! $( cd "$TARGET_DIR" && ln -fns "site-$last_script_version/www" "www"); then
         echo "Could not move to the new version"
         exit 1
     fi
 
-    readonly two_versions_ago = $(cat "$1/old_version")
-    echo "$last_script_version" > "$1/version"
-    echo "$current_version" > "$1/old_version"
+    echo "$last_script_version" > "$TARGET_DIR/version"
+    echo "$current_version" > "$TARGET_DIR/old_version"
 
     rm -rf "$TARGET_DIR/site-$two_versions_ago" || echo "Could not cleanup old version"
 
