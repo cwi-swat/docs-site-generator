@@ -8,7 +8,7 @@ node {
 
         stage('Clone & Reset'){
             checkout scm
-            sh "rm -rf site && mkdir site"
+            sh "rm -rf site && mkdir -p site/www"
         }
 
         stage("Download & Unpack") {
@@ -18,15 +18,15 @@ node {
             // for the unstable, we do use nexus, to avoid always being one commit behind the unstable release on the slower-to-update update site
             sh 'curl -L "$NEXUS_ROOT/service/local/artifact/maven/content?g=org.rascalmpl&a=rascal&r=snapshots&v=LATEST" > stable.jar'
 
-            sh 'jar xf stable.jar boot/courses   && mv boot/courses site/stable '
-            sh 'jar xf unstable.jar boot/courses && mv boot/courses site/unstable '
+            sh 'jar xf stable.jar boot/courses   && mv boot/courses site/www/stable '
+            sh 'jar xf unstable.jar boot/courses && mv boot/courses site/www/unstable '
 
             sh 'rm -r *.jar boot/'
         }
 
         stage("Fixup") {
-            sh "find site/stable -name *.html -print0   | xargs -0 sed -i 's,\\(src\\|href|action\\)=\"/,\\1=\"/stable/,g'"
-            sh "find site/unstable -name *.html -print0 | xargs -0 sed -i 's,\\(src\\|href|action\\)=\"/,\\1=\"/unstable/,g'"
+            sh "find site/www/stable -name *.html -print0   | xargs -0 sed -i 's,\\(src\\|href|action\\)=\"/,\\1=\"/stable/,g'"
+            sh "find site/www/unstable -name *.html -print0 | xargs -0 sed -i 's,\\(src\\|href|action\\)=\"/,\\1=\"/unstable/,g'"
         }
 
         stage("Compress") {
@@ -37,8 +37,8 @@ node {
             stage("Merge indexes") {
                 sh 'mkdir site/search'
                 sh 'mvn clean compile'
-                sh 'mvn exec:java -Dexec.args="site/search/stable site/stable/"'
-                sh 'mvn exec:java -Dexec.args="site/search/unstable site/unstable/"'
+                sh 'mvn exec:java -Dexec.args="site/search/stable site/www/stable/"'
+                sh 'mvn exec:java -Dexec.args="site/search/unstable site/www/unstable/"'
             }
 
             stage('Package') {

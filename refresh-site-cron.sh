@@ -30,6 +30,20 @@ else
         echo "Error downloading new docs site"
         exit 1
     fi
-    rsync -ra "site/" "$TARGET_DIR"
+
+    echo `ls``
+    mv "site/" "$TARGET_DIR/site-$last_script_version"
+    if ! ln -fns "$TARGET_DIR/site-$last_script_version/www" "$TARGET_DIR/www"; then
+        echo "Could not move to the new version"
+        exit 1
+    fi
+
+    readonly two_versions_ago = $(cat "$1/old_version")
     echo "$last_script_version" > "$1/version"
+    echo "$current_version" > "$1/old_version"
+
+    rm -rf "$TARGET_DIR/site-$two_versions_ago" || echo "Could not cleanup old version"
+
+    echo "Migrated to new version, and cleaned-up old"
+    exit 1
 fi
