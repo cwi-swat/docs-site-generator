@@ -39,7 +39,7 @@ node {
             sh "cp site/www/unstable/favicon.ico site/www/unstable/fonts/"
 
             // fix incorrect font-awesome in header
-            sh "find site/www -name *.html -print0 | xargs -0 sed -i 's,<link rel=\"stylesheet\" href=\"./font-awesome.css\">,,''"
+            sh "find site/www -name *.html -print0 | xargs -0 sed -i 's,<link rel=\"stylesheet\" href=\"./font-awesome.css\">,,'"
         }
 
         stage("Compress") {
