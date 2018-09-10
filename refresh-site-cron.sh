@@ -1,3 +1,4 @@
+#!/bin/bash
 ######
 # This file has to be manually copied to the server
 #####
