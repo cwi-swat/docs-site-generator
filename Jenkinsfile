@@ -25,8 +25,20 @@ node {
         }
 
         stage("Fixup") {
+            if (!fileExists('site/www/stable/search.html')) {
+                // as long as stable doesn't contain the new search api, fix it
+                sh "find site/www/stable -name *.html -print0 | xargs -0 sed -i 's,action=\"/Search\",action=\"/search.html\" method=\"get\",g'"
+                sh "cp site/www/{un,}stable/search.html"
+            }
+
             sh "find site/www/stable -name *.html -print0   | xargs -0 sed -i 's,\\(src\\|href\\|action\\)=\"/,\\1=\"/stable/,g'"
             sh "find site/www/unstable -name *.html -print0 | xargs -0 sed -i 's,\\(src\\|href\\|action\\)=\"/,\\1=\"/unstable/,g'"
+            // fix location of favicon file
+            sh "cp site/www/unstable/favicon.ico site/www"
+            sh "cp site/www/unstable/favicon.ico site/www/{un,}stable/fonts/"
+
+            // fix incorrect font-awesome in header
+            sh "find site/www -name *.html -print0 | xargs -0 sed -i 's,<link rel=\"stylesheet\" href=\"./font-awesome.css\">,,''"
         }
 
         stage("Compress") {
