@@ -35,7 +35,8 @@ node {
             sh "find site/www/unstable -name *.html -print0 | xargs -0 sed -i 's,\\(src\\|href\\|action\\)=\"/,\\1=\"/unstable/,g'"
             // fix location of favicon file
             sh "cp site/www/unstable/favicon.ico site/www"
-            sh "cp site/www/unstable/favicon.ico site/www/{un,}stable/fonts/"
+            sh "cp site/www/unstable/favicon.ico site/www/stable/fonts/"
+            sh "cp site/www/unstable/favicon.ico site/www/unstable/fonts/"
 
             // fix incorrect font-awesome in header
             sh "find site/www -name *.html -print0 | xargs -0 sed -i 's,<link rel=\"stylesheet\" href=\"./font-awesome.css\">,,''"
