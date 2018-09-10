@@ -25,10 +25,10 @@ node {
         }
 
         stage("Fixup") {
-            if (!fileExists('site/www/stable/search.html')) {
+            if (!fileExists('site/www/stable/search-results.html')) {
                 // as long as stable doesn't contain the new search api, fix it
-                sh "find site/www/stable -name *.html -print0 | xargs -0 sed -i 's,action=\"/Search\",action=\"/search.html\" method=\"get\",g'"
-                sh "cp site/www/{un,}stable/search.html"
+                sh "find site/www/stable -name *.html -print0 | xargs -0 sed -i 's,action=\"/Search\",action=\"/search-results.html\" method=\"get\",g'"
+                sh "cp site/www/{un,}stable/search-results.html"
             }
 
             sh "find site/www/stable -name *.html -print0   | xargs -0 sed -i 's,\\(src\\|href\\|action\\)=\"/,\\1=\"/stable/,g'"
