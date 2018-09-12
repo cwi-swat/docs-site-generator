@@ -46,7 +46,7 @@ node {
             // compress the large HTML pages with some kind of minification?
 
             // precompress all files so that nginx is faster in serving them
-            sh "find site/www -type f -print0 | xargs -P 8 -0 -n 1 -I{} 7za a -mx9 {}.gz {}"
+            sh "find site/www -type f -print0 | xargs -P 8 -0 -n 1 -I{} 7za -y -bsp0 -bso0 a -mx9 {}.gz {}"
         }
 
         withMaven(maven: 'M3', jdk: 'jdk-oracle-8', options: [artifactsPublisher(disabled: true), junitPublisher(disabled: true)] ) {
