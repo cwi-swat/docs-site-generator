@@ -44,7 +44,7 @@ node {
 
         stage("Compress") {
             // compress the large HTML pages with some kind of minification?
-            sh "find site/www -type f -name '*.html' -print0 | xargs -P 8 -0 -n 1 -I{} sh -c 'html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true {} 2> {}''"
+            sh "find site/www -type f -name '*.html' -print0 | xargs -P 8 -0 -n 1 -I{} sh -c 'html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true {} 2> {}'"
 
             // prepare zopfli & zopflipng tool
             sh "curl -L https://github.com/google/zopfli/archive/zopfli-1.0.2.tar.gz | tar zx"
