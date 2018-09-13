@@ -19,7 +19,6 @@ function main() {
         collapseBooleanAttributes : true,
         collapseWhitespace: true,
         conservativeCollapse: true,
-        html5: true,
         minifyCSS: true,
         minifyJS: true,
         minifyURLs: false,
@@ -51,7 +50,14 @@ function main() {
                     else {
                         let newContents = "";
                         if (item.path.endsWith(".html")) {
-                            newContents= minify.minify(data.toString('utf-8'), defaultOptions);
+                            try {
+                                newContents= minify.minify(data.toString('utf-8'), defaultOptions);
+                            }
+                            catch (e) {
+                                console.error("Error for: " + item.path);
+                                console.error(e);
+                                return;
+                            }
                         }
                         else if (item.path.endsWith(".js")) {
                             const result = UglifyJS.minify(data.toString('utf-8')); 
