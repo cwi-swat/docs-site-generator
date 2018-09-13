@@ -1,0 +1,28 @@
+{
+  "name": "docs-site-generator",
+  "version": "1.0.0",
+  "description": "Script that generates doc site",
+  "main": "bin/index.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "prestart": "tsc -p ./",
+    "start": "node ./bin/index.js"
+  },
+  "keywords": [],
+  "author": "Davy Landman",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "clean-css": "^3.4.28",
+    "html-minifier": "^3.5.20",
+    "klaw": "^3.0.0",
+    "uglify-js": "^3.4.9"
+  },
+  "devDependencies": {
+    "@types/clean-css": "^3.4.30",
+    "@types/html-minifier": "^3.5.2",
+    "@types/klaw": "^2.1.1",
+    "@types/node": "^10.9.4",
+    "@types/uglify-js": "^3.0.3",
+    "typescript": "^3.0.3"
+  }
+}

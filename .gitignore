@@ -4,3 +4,4 @@ tmp/
 target/
 .classpath
 .project
+node_modules/
