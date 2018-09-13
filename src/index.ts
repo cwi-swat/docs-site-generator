@@ -55,7 +55,6 @@ function main() {
                             }
                             catch (e) {
                                 console.error("Error for: " + item.path);
-                                console.error(e);
                                 return;
                             }
                         }
