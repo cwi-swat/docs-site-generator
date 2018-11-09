@@ -11,7 +11,7 @@ import org.apache.lucene.store.FSDirectory;
 
 public class UpgradeIndexes {
     public static void main(String[] args) throws IOException {
-        Path sourcePath = new File(args[1]).toPath();
+        Path sourcePath = new File(args[0]).toPath();
         System.out.println("Upgrading indexes in: " + sourcePath);
         Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
             @Override
