@@ -63,8 +63,8 @@ node {
                 sh 'mkdir site/search'
                 sh 'mvn clean compile'
                 sh 'mvn exec:java@upgrade -Dexec.args="site/www/stable/"'
-                sh 'mvn exec:java -Dexec.args="site/search/stable site/www/stable/"'
-                sh 'mvn exec:java -Dexec.args="site/search/unstable site/www/unstable/"'
+                sh 'mvn exec:java@merge -Dexec.args="site/search/stable site/www/stable/"'
+                sh 'mvn exec:java@merge -Dexec.args="site/search/unstable site/www/unstable/"'
             }
 
             stage('Package') {
