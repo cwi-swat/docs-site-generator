@@ -48,14 +48,14 @@ node {
             sh 'npm run start -- site/www/stable'
             sh 'npm run start -- site/www/unstable'
 
-           // // prepare zopfli & zopflipng tool
-           // sh "curl -L https://github.com/google/zopfli/archive/zopfli-1.0.2.tar.gz | tar zx"
-           // sh "cd zopfli-zopfli-1.0.2 && make zopfli zopflipng"
+            // prepare zopfli & zopflipng tool
+            sh "curl -L https://github.com/google/zopfli/archive/zopfli-1.0.2.tar.gz | tar zx"
+            sh "cd zopfli-zopfli-1.0.2 && make zopfli zopflipng"
 
-           // // precompress all files so that nginx is faster in serving them
-           // sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -P 8 -0 -n 1 zopfli-zopfli-1.0.2/zopfli --i20"
-           // sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -0 -n 1 -I{} touch  -r {} {}.gz"
-           // sh "find site/www -type f -name '*.png' -print0 | xargs -P 8 -0 -n 1 -I{} zopfli-zopfli-1.0.2/zopflipng -y {} {}"
+            // precompress all files so that nginx is faster in serving them
+            sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -P 8 -0 -n 1 zopfli-zopfli-1.0.2/zopfli --i20"
+            sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -0 -n 1 -I{} touch  -r {} {}.gz"
+            sh "find site/www -type f -name '*.png' -print0 | xargs -P 8 -0 -n 1 -I{} zopfli-zopfli-1.0.2/zopflipng -y {} {}"
         }
 
         withMaven(maven: 'M3', jdk: 'jdk-oracle-8', options: [artifactsPublisher(disabled: true), junitPublisher(disabled: true)] ) {
