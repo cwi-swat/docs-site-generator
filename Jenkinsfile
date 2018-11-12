@@ -53,8 +53,8 @@ node {
             sh "cd ect/src/mozjpeg && aclocal &&  autoreconf -fiv && cd ../ && make"
 
             // precompress all files so that nginx is faster in serving them
-            sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -P 8 -0 -n 1 ect/ect -8 -strip -keep -gzip "
-            sh "find site/www -type f -name '*.png' -print0 | xargs -P 8 -0 -n 1 ect/ect -8 -strip -keep  --strict"
+            sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -P 8 -0 -n 1 ect/ect -5 -strip -keep -gzip "
+            sh "find site/www -type f -name '*.png' -print0 | xargs -P 8 -0 -n 1 ect/ect -5 -strip -keep  --strict"
         }
 
         withMaven(maven: 'M3', jdk: 'jdk-oracle-8', options: [artifactsPublisher(disabled: true), junitPublisher(disabled: true)] ) {
