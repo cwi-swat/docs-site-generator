@@ -49,7 +49,7 @@ node {
             sh 'npm run start -- site/www/unstable'
 
             // compile ect
-            sh "rm -rf ect/ && git clone --depth 5 --recursive https://github.com/fhanau/Efficient-Compression-Tool.git ect/"
+            sh "git clone --depth 5 --recursive https://github.com/fhanau/Efficient-Compression-Tool.git ect/ || (cd ect && git pull && git submodule update)"
             sh "cd ect/src/mozjpeg && aclocal &&  autoreconf -fiv && cd ../ && make"
 
             // precompress all files so that nginx is faster in serving them
