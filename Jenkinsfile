@@ -49,12 +49,12 @@ node {
             sh 'npm run start -- site/www/unstable'
 
             // compile ect
-            sh "git clone --depth 5 --recursive https://github.com/fhanau/Efficient-Compression-Tool.git"
-            sh "cd Efficient-Compression-Tool/mozjpeg && aclocal &&  autoreconf -fiv && cd ../src/ && make && cd .. && cp ect ../"
+            sh "git clone --depth 5 --recursive https://github.com/fhanau/Efficient-Compression-Tool.git ect/"
+            sh "cd ect/src/mozjpeg && aclocal &&  autoreconf -fiv && cd ../ && make"
 
             // precompress all files so that nginx is faster in serving them
-            sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -P 8 -0 -n 1 ./ect -8 -strip -keep -gzip "
-            sh "find site/www -type f -name '*.png' -print0 | xargs -P 8 -0 -n 1 ./ect -8 -strip -keep  --strict --allfilters --pal_sort=20"
+            sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -P 8 -0 -n 1 ect/ect -8 -strip -keep -gzip "
+            sh "find site/www -type f -name '*.png' -print0 | xargs -P 8 -0 -n 1 ect/ect -8 -strip -keep  --strict --allfilters --pal_sort=20"
         }
 
         withMaven(maven: 'M3', jdk: 'jdk-oracle-8', options: [artifactsPublisher(disabled: true), junitPublisher(disabled: true)] ) {
