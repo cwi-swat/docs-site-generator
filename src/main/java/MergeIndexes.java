@@ -41,6 +41,9 @@ class MergeIndexes {
         });
 
         System.out.println("Merging " + indexes.size() + " indexes");
+        for (Directory p : indexes) {
+            System.out.println("\t" + p);
+        }
         try (Directory mergedIndex = new HardlinkCopyDirectoryWrapper(FSDirectory.open(Paths.get(args[0])))) {
             try (IndexWriter writer = new IndexWriter(mergedIndex, new IndexWriterConfig(null).setOpenMode(OpenMode.CREATE))) {
                 writer.addIndexes(indexes.toArray(new Directory[0]));
