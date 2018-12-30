@@ -16,7 +16,6 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.HardlinkCopyDirectoryWrapper;
 
 class MergeIndexes {
     public static void main(String[] args) throws IOException {
@@ -46,7 +45,7 @@ class MergeIndexes {
         });
 
         System.out.println("Merging " + indexes.size() + " indexes");
-        try (Directory mergedIndex = new HardlinkCopyDirectoryWrapper(FSDirectory.open(Paths.get(args[0])))) {
+        try (Directory mergedIndex = FSDirectory.open(Paths.get(args[0]))) {
             try (IndexWriter writer = new IndexWriter(mergedIndex, new IndexWriterConfig(null).setOpenMode(OpenMode.CREATE))) {
                 writer.addIndexes(indexes.toArray(new Directory[0]));
             }
