@@ -74,6 +74,9 @@ node {
                 sh 'mvn deploy:deploy-file -DgroupId=org.rascalmpl -DartifactId=docs-tutor-site -Dversion=1.0.0-SNAPSHOT -DgeneratePom=false -Dpackaging=tar.gz -Dfile=full-site.tar.gz -DrepositoryId=usethesource-snapshots -Durl=$NEXUS_ROOT/content/repositories/snapshots/'
             }
         }
+    if (currentBuild.previousBuild.result == "FAILURE") { 
+        slackSend (color: '#5cb85c', message: "BUILD BACK TO NORMAL: <${env.BUILD_URL}|${env.JOB_NAME} [${env.BUILD_NUMBER}]>")
+    }
     } catch(e) {
         slackSend (color: '#d9534f', message: "FAILED: <${env.BUILD_URL}|${env.JOB_NAME} [${env.BUILD_NUMBER}]>")
         throw e
