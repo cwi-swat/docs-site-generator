@@ -49,10 +49,10 @@ node {
             sh 'npm run start -- site/www/unstable'
 
             // compile ect
-            if (!fileExists('ect/')) {
+            //if (!fileExists('ect/')) {
                 sh 'rm -rf ect/'
                 sh "git clone --recursive https://github.com/fhanau/Efficient-Compression-Tool.git ect/"
-            }
+            //}
             // checkout working version of ect, update in the future to point to a specific release
             //sh "cd ect && git checkout -- . && git checkout ef8c2e8a286f57bd2973a9196f991acd0b11c8e4 && git submodule update --recursive --remote"
             //sh "cd ect/src/mozjpeg && aclocal &&  autoreconf -fiv && cd ../ && make"
