@@ -56,7 +56,7 @@ node {
             //sh "cd ect && git checkout -- . && git checkout ef8c2e8a286f57bd2973a9196f991acd0b11c8e4 && git submodule update --recursive --remote"
             //sh "cd ect/src/mozjpeg && aclocal &&  autoreconf -fiv && cd ../ && make"
             sh "cd ect && git checkout -- . && git pull && git submodule update --recursive --remote"
-            sh "cd ect/src && make clean && make all"
+            sh "cd ect/src && (make clean || true) && make all"
 
             // precompress all files so that nginx is faster in serving them
             sh "find site/www -type f \\( -name '*.html' -o -name '*.css' -o -name '*.js' \\) -print0 | xargs -P 8 -0 -n 1 ect/ect -5 -strip -quiet -keep -gzip"
