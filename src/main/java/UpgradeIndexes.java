@@ -21,7 +21,7 @@ public class UpgradeIndexes {
         Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (file.toString().endsWith(".cfe")) {
+                if (file.toString().endsWith(".si")) {
                     FSDirectory dir = FSDirectory.open(file.getParent());
                     // try to open it to see if it is corrupt
                     try (DirectoryReader ireader = DirectoryReader.open(dir)) {
