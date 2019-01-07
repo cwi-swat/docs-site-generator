@@ -36,6 +36,22 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>lucene7</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>lucene6</id>
+            <properties>
+                <lucene-version>6.6.5</lucene-version>        <!-- rascal stable -->
+            </properties>
+        </profile>
+    </profiles>
+
+
     <dependencies>
         <dependency>
             <groupId>org.apache.lucene</groupId>

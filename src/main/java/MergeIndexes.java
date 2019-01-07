@@ -47,6 +47,7 @@ class MergeIndexes {
         System.out.println("Merging " + indexes.size() + " indexes");
         try (Directory mergedIndex = FSDirectory.open(Paths.get(args[0]))) {
             try (IndexWriter writer = new IndexWriter(mergedIndex, new IndexWriterConfig(null).setOpenMode(OpenMode.CREATE))) {
+                writer.forceMerge(1);
                 writer.addIndexes(indexes.toArray(new Directory[0]));
             }
         }

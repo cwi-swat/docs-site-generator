@@ -65,8 +65,8 @@ node {
                 sh 'mkdir site/search'
                 sh 'mvn clean compile'
                 sh 'rm -rf site/www/stable/RunTimeErrors/*.si' // remove broken index in the stable jar
-                sh 'mvn exec:java@upgrade -Dexec.args="site/www/stable/"'
-                sh 'mvn exec:java@merge -Dexec.args="site/search/stable site/www/stable/"'
+                sh 'mvn exec:java@merge -Dexec.args="site/search/stable site/www/stable/" -Plucene6'
+                sh 'mvn exec:java@upgrade -Dexec.args="site/search/stable/"' // upgrade to lucene 7 after the merge
                 sh 'mvn exec:java@merge -Dexec.args="site/search/unstable site/www/unstable/"'
             }
 
