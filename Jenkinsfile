@@ -4,7 +4,7 @@ node {
         env.JAVA_HOME="${tool 'jdk-oracle-8'}"
         env.PATH="${env.JAVA_HOME}/bin:${mvnHome}/bin:${env.PATH}"
 
-        env.NEXUS_ROOT="http://nexus.usethesource.io"
+        env.NEXUS_ROOT="https://nexus.usethesource.io"
 
         stage('Clone & Reset'){
             checkout scm
